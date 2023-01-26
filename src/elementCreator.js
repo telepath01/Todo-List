@@ -21,7 +21,9 @@ class ElementCreator {
     }
   }
   elementPlacement(parentElement) {
-    parentElement.append(this.element);
+    if (parentElement) {
+      parentElement.append(this.element);
+    }
   }
 }
 
