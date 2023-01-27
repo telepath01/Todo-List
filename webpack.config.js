@@ -8,6 +8,8 @@ module.exports = {
     elementCreator: './src/elementCreator.js',
     pageElements: './src/pageElements.js',
     headingElement: './src/headingElement.js',
+    sidebarElement: './src/sidebarElement.js',
+    modalCreator: './src/listModalCreator.js',
   },
   devtool: 'inline-source-map',
   devServer: {
