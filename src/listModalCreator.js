@@ -6,22 +6,14 @@ const ModalCreator = (function () {
   const parentElement = document.body;
   const listArr = [];
   class ListElement {
-    constructor(
-      storageArr,
-      title,
-      description,
-      dueDate,
-      priority,
-      notes,
-      checklist
-    ) {
+    constructor(storageArr, title, description, dueDate, priority, notes) {
       this.storageArr = this.sendtoArr(storageArr);
-      this.title = title;
-      this.description = description;
-      this.dueDate = dueDate;
-      this.priority = priority;
-      this.notes = notes;
-      this.checklist = checklist;
+      this.title = title.value;
+      this.description = description.value;
+      this.dueDate = dueDate.value;
+      this.priority = priority.value;
+      this.notes = notes.value;
+      this.checklist = false;
     }
 
     sendtoArr() {
@@ -61,7 +53,7 @@ const ModalCreator = (function () {
     const fieldsetLegend = new ElementCreator(
       fieldsetForm.element,
       'legend',
-      'form-fieldset',
+      'form-fieldset-legend',
       'To-Do Item'
     );
     const titleDiv = new ElementCreator(
@@ -211,8 +203,63 @@ const ModalCreator = (function () {
       'form-button',
       'Create Item'
     );
+    formSubmit(
+      formButton.element,
+      listModal.element,
+      listArr,
+      document.querySelector('.title-input'),
+      document.querySelector('.des-input'),
+      document.querySelector('.dueDate-input'),
+      document.querySelector('.priority-select'),
+      document.querySelector('.notes-text')
+    );
   };
 
-  return { listCreator };
+  const listOjectCreator = (
+    storage,
+    title,
+    description,
+    dueDate,
+    priority,
+    notes
+  ) => {
+    const listObject = new ListElement(
+      storage,
+      title,
+      description,
+      dueDate,
+      priority,
+      notes
+    );
+    console.log(listObject);
+  };
+
+  const formSubmit = (
+    button,
+    childElement,
+    storage,
+    titleInput,
+    descriptionInput,
+    dueDateInput,
+    priorityInput,
+    notesInput
+  ) => {
+    button.addEventListener('click', () => {
+      listOjectCreator(
+        storage,
+        titleInput,
+        descriptionInput,
+        dueDateInput,
+        priorityInput,
+        notesInput
+      );
+      parentElement.removeChild(childElement);
+
+      console.log('working');
+      event.preventDefault();
+    });
+  };
+
+  return { listCreator, listArr };
 })();
 export default ModalCreator;
