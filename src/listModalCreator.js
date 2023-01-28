@@ -1,25 +1,18 @@
 'use strict';
 import ElementCreator from './elementCreator';
-import PageRenderer from './pageElements';
+import ListCardCreator from './listCardCreator';
 
 const ModalCreator = (function () {
   const parentElement = document.body;
   const listArr = [];
   class ListElement {
-    constructor(storageArr, title, description, dueDate, priority, notes) {
-      this.storageArr = this.sendtoArr(storageArr);
+    constructor(title, description, dueDate, priority, notes) {
       this.title = title.value;
       this.description = description.value;
       this.dueDate = dueDate.value;
       this.priority = priority.value;
       this.notes = notes.value;
       this.checklist = false;
-    }
-
-    sendtoArr() {
-      if (this.storageArr) {
-        this.storageArr.push();
-      }
     }
   }
 
@@ -224,14 +217,14 @@ const ModalCreator = (function () {
     notes
   ) => {
     const listObject = new ListElement(
-      storage,
       title,
       description,
       dueDate,
       priority,
       notes
     );
-    console.log(listObject);
+
+    storage.push(listObject);
   };
 
   const formSubmit = (
@@ -253,9 +246,10 @@ const ModalCreator = (function () {
         priorityInput,
         notesInput
       );
-      parentElement.removeChild(childElement);
 
-      console.log('working');
+      parentElement.removeChild(childElement);
+      ListCardCreator.cardRenderer();
+
       event.preventDefault();
     });
   };

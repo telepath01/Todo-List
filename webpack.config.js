@@ -10,6 +10,7 @@ module.exports = {
     headingElement: './src/headingElement.js',
     sidebarElement: './src/sidebarElement.js',
     modalCreator: './src/listModalCreator.js',
+    listCardCreator: './src/listCardCreator.js',
   },
   devtool: 'inline-source-map',
   devServer: {
