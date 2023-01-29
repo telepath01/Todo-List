@@ -27,7 +27,7 @@ const ListCardCreator = (function () {
       const dueDate = new ElementCreator(
         cardDiv.element,
         'p',
-        'card-dueDAte',
+        'card-dueDate',
         cardArr[i].dueDate
       );
       const priority = new ElementCreator(
@@ -62,7 +62,36 @@ const ListCardCreator = (function () {
         '',
         'checkbox'
       );
+      const button = new ElementCreator(
+        cardDiv.element,
+        'button',
+        'delete-button',
+        'X'
+      );
+      completeChecked(checkbox, cardDiv);
+      deleteListener(button, parentCard, cardDiv, cardArr, i);
     }
+  };
+
+  const completeChecked = (checkElement, cardDiv) => {
+    checkElement.element.addEventListener('change', () => {
+      if (checkElement.element.checked) {
+        cardDiv.element.style.backgroundColor = '#7CB9E8';
+      } else cardDiv.element.style.backgroundColor = '#efefef';
+    });
+  };
+
+  const deleteListener = (
+    deleteButton,
+    parentElement,
+    childElement,
+    arrayList,
+    index
+  ) => {
+    deleteButton.element.addEventListener('click', () => {
+      parentElement.removeChild(childElement.element);
+      arrayList.splice(index);
+    });
   };
   return { cardRenderer };
 })();

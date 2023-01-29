@@ -1,5 +1,5 @@
 import ElementCreator from './elementCreator';
-import HeadingElement from './headingElement';
+import ListCardCreator from './listCardCreator';
 
 const PageRenderer = (function () {
   const parentContainer = document.body;
@@ -30,6 +30,7 @@ const PageRenderer = (function () {
       'div',
       'list-container'
     );
+
     const footerContainer = new ElementCreator(
       pageContainer.element,
       'div',

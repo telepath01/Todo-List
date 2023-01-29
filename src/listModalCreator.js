@@ -248,8 +248,8 @@ const ModalCreator = (function () {
       );
 
       parentElement.removeChild(childElement);
-      ListCardCreator.cardRenderer();
-
+      (document.querySelector('.list-container').textContent = ''),
+        ListCardCreator.cardRenderer();
       event.preventDefault();
     });
   };
