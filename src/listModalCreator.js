@@ -2,7 +2,7 @@
 import ElementCreator from './elementCreator';
 import ListCardCreator from './listCardCreator';
 import FooterCreator from './footerCreator';
-import PageRenderer from './pageElements';
+import StorageManager from './storageManager';
 
 const ModalCreator = (function () {
   const parentElement = document.body;
@@ -261,6 +261,7 @@ const ModalCreator = (function () {
         ListCardCreator.cardRenderer();
       event.preventDefault();
       setCounterNumber(priorityInput);
+      StorageManager.indexCounting();
     });
   };
 

@@ -105,6 +105,7 @@ const ListCardCreator = (function () {
       arrayList.splice(index);
     });
   };
+
   const priorityCheck = (priority) => {
     if (priority.element.textContent === 'Low') {
       priority.element.style.color = '#FFFAF0';
@@ -124,13 +125,13 @@ const ListCardCreator = (function () {
     notes
   ) => {
     const indexAdd = index + 1;
-    localStorage.setItem(`titile${indexAdd}`, title.element.textContent);
+    localStorage.setItem(`title${indexAdd}`, title.element.textContent);
     localStorage.setItem(
       `description${indexAdd}`,
       description.element.textContent
     );
     localStorage.setItem(`priority${indexAdd}`, priority.element.textContent);
-    localStorage.setItem(`duDate${indexAdd}`, dueDate.element.textContent);
+    localStorage.setItem(`dueDate${indexAdd}`, dueDate.element.textContent);
     localStorage.setItem(`notes${indexAdd}`, notes.element.textContent);
   };
   return { cardRenderer };
