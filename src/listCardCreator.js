@@ -1,6 +1,7 @@
 'use strict';
 import ModalCreator from './listModalCreator';
 import ElementCreator from './elementCreator';
+import FooterCreator from './footerCreator';
 
 const ListCardCreator = (function () {
   const cardRenderer = () => {
@@ -68,8 +69,9 @@ const ListCardCreator = (function () {
         'delete-button',
         'X'
       );
+      priorityCheck(priority);
       completeChecked(checkbox, cardDiv);
-      deleteListener(button, parentCard, cardDiv, cardArr, i);
+      deleteListener(button, parentCard, cardDiv, cardArr, i, priority);
     }
   };
 
@@ -86,12 +88,29 @@ const ListCardCreator = (function () {
     parentElement,
     childElement,
     arrayList,
-    index
+    index,
+    priority
   ) => {
     deleteButton.element.addEventListener('click', () => {
+      if (priority.element.textContent === 'Low') {
+        console.log('deleted low');
+        FooterCreator.lowCountGetter('subtract');
+      } else if (priority.element.textContent === 'High') {
+        console.log('deleted high');
+        FooterCreator.highCountGetter('subtract');
+      }
       parentElement.removeChild(childElement.element);
       arrayList.splice(index);
     });
+  };
+  const priorityCheck = (priority) => {
+    if (priority.element.textContent === 'Low') {
+      priority.element.style.color = '#FFFAF0';
+      priority.element.style.backgroundColor = '#177245';
+    } else if (priority.element.textContent === 'High') {
+      priority.element.style.color = '#FFFAF0';
+      priority.element.style.backgroundColor = '#B22222';
+    }
   };
   return { cardRenderer };
 })();

@@ -11,6 +11,7 @@ module.exports = {
     sidebarElement: './src/sidebarElement.js',
     modalCreator: './src/listModalCreator.js',
     listCardCreator: './src/listCardCreator.js',
+    footerCreator: './src/footerCreator.js',
   },
   devtool: 'inline-source-map',
   devServer: {

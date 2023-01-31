@@ -1,5 +1,5 @@
 import ElementCreator from './elementCreator';
-import ListCardCreator from './listCardCreator';
+import FooterCreator from './footerCreator';
 
 const PageRenderer = (function () {
   const parentContainer = document.body;
@@ -7,6 +7,7 @@ const PageRenderer = (function () {
 
   const pageRender = () => {
     parentCreator();
+    FooterCreator.footerRender(elementsArr[4].element);
   };
 
   const parentCreator = () => {

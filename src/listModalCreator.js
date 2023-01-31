@@ -1,6 +1,8 @@
 'use strict';
 import ElementCreator from './elementCreator';
 import ListCardCreator from './listCardCreator';
+import FooterCreator from './footerCreator';
+import PageRenderer from './pageElements';
 
 const ModalCreator = (function () {
   const parentElement = document.body;
@@ -227,6 +229,14 @@ const ModalCreator = (function () {
     storage.push(listObject);
   };
 
+  const setCounterNumber = (priority) => {
+    if (priority.value === 'Low') {
+      FooterCreator.lowCountGetter('add');
+    } else if (priority.value === 'High') {
+      FooterCreator.highCountGetter('add');
+    }
+  };
+
   const formSubmit = (
     button,
     childElement,
@@ -246,11 +256,11 @@ const ModalCreator = (function () {
         priorityInput,
         notesInput
       );
-
       parentElement.removeChild(childElement);
       (document.querySelector('.list-container').textContent = ''),
         ListCardCreator.cardRenderer();
       event.preventDefault();
+      setCounterNumber(priorityInput);
     });
   };
 

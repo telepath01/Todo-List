@@ -148,8 +148,31 @@ body {
 
 */
 .footer-container {
+  align-items: center;
+  gap: 1rem;
+  display: grid;
   background-color: burlywood;
+  grid-template-columns: repeat(2, 1fr);
   grid-area: footer;
+  grid-template-areas: 'lowCount highCount';
+}
+.lowCounter-container {
+  font-weight: bold;
+  color: #fffaf0;
+  padding: 0 15px;
+  background-color: #177245;
+  margin: auto;
+  width: fit-content;
+  grid-area: lowCount;
+}
+.highCount-container {
+  font-weight: bold;
+  color: #fffaf0;
+  padding: 0 15px;
+  background-color: #b22222;
+  margin: auto;
+  width: fit-content;
+  grid-area: highCount;
 }
 
 /* Modal window 
