@@ -2,6 +2,7 @@
 import ModalCreator from './listModalCreator';
 import ElementCreator from './elementCreator';
 import FooterCreator from './footerCreator';
+import StorageManager from './storageManager';
 
 const ListCardCreator = (function () {
   const cardRenderer = () => {
@@ -69,6 +70,7 @@ const ListCardCreator = (function () {
         'delete-button',
         'X'
       );
+      storagePopulation(i, title, description, priority, dueDate, notes);
       priorityCheck(priority);
       completeChecked(checkbox, cardDiv);
       deleteListener(button, parentCard, cardDiv, cardArr, i, priority);
@@ -111,6 +113,25 @@ const ListCardCreator = (function () {
       priority.element.style.color = '#FFFAF0';
       priority.element.style.backgroundColor = '#B22222';
     }
+  };
+
+  const storagePopulation = (
+    index,
+    title,
+    description,
+    priority,
+    dueDate,
+    notes
+  ) => {
+    const indexAdd = index + 1;
+    localStorage.setItem(`titile${indexAdd}`, title.element.textContent);
+    localStorage.setItem(
+      `description${indexAdd}`,
+      description.element.textContent
+    );
+    localStorage.setItem(`priority${indexAdd}`, priority.element.textContent);
+    localStorage.setItem(`duDate${indexAdd}`, dueDate.element.textContent);
+    localStorage.setItem(`notes${indexAdd}`, notes.element.textContent);
   };
   return { cardRenderer };
 })();

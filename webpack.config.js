@@ -12,6 +12,7 @@ module.exports = {
     modalCreator: './src/listModalCreator.js',
     listCardCreator: './src/listCardCreator.js',
     footerCreator: './src/footerCreator.js',
+    storageManager: './src/storageManager.js',
   },
   devtool: 'inline-source-map',
   devServer: {
