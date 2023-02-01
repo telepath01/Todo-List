@@ -1,6 +1,7 @@
 'use strict';
 import ElementCreator from './elementCreator';
 import PageRenderer from './pageElements';
+import FooterCreator from './footerCreator';
 
 const StorageManager = (function () {
   const listParant = document.querySelector('.list-container');
@@ -9,7 +10,10 @@ const StorageManager = (function () {
 
   const storageStart = () => {
     if (localStorage) {
+      indexCounter = Number(localStorage.getItem('indexCounter'));
       populateStorage();
+      localStorage.clear();
+      indexCounter = 0;
     } else {
       setStorage();
     }
@@ -18,19 +22,20 @@ const StorageManager = (function () {
     console.log('setting storage');
   };
   const populateStorage = () => {
-    if (localStorage.length === 0) {
-    } else {
-      for (let i = 0; i <= indexCounter; i++) {
+    if (indexCounter === 0) {
+    } else if (indexCounter > 0) {
+      for (let i = 0; i < indexCounter; i++) {
         createStorageCard(i + 1);
       }
-
-      console.log('populating storage');
     }
+
+    console.log('populating storage');
   };
 
   const indexCounting = () => {
     indexCounter += 1;
     localStorage.setItem('indexCounter', indexCounter);
+    console.log(indexCounter);
   };
 
   const createStorageCard = (index) => {
@@ -109,9 +114,11 @@ const StorageManager = (function () {
     if (priorityElement.textContent === 'Low') {
       priorityElement.style.color = '#FFFAF0';
       priorityElement.style.backgroundColor = '#177245';
+      FooterCreator.lowCountGetter('add');
     } else if (priorityElement.textContent === 'High') {
       priorityElement.style.color = '#FFFAF0';
       priorityElement.style.backgroundColor = '#B22222';
+      FooterCreator.highCountGetter('add');
     }
   };
 
@@ -132,7 +139,6 @@ const StorageManager = (function () {
     localStorage.removeItem(`priority${index}`);
     localStorage.removeItem(`dueDate${index}`);
     localStorage.removeItem(`notes${index}`);
-    localStorage.setItem('indexCounter', indexCounter - 1);
   };
 
   return { storageStart, populateStorage, storageArr, indexCounting };
