@@ -3,7 +3,6 @@ import ModalCreator from './listModalCreator';
 import ElementCreator from './elementCreator';
 import FooterCreator from './footerCreator';
 import StorageManager from './storageManager';
-
 const ListCardCreator = (function () {
   const cardRenderer = () => {
     cardCreator();
@@ -70,10 +69,17 @@ const ListCardCreator = (function () {
         'delete-button',
         'X'
       );
-      storagePopulation(i, title, description, priority, dueDate, notes);
+      StorageManager.storageSetter(
+        i + 1,
+        title,
+        description,
+        dueDate,
+        priority,
+        notes
+      );
       priorityCheck(priority);
       completeChecked(checkbox, cardDiv);
-      deleteListener(button, parentCard, cardDiv, cardArr, i, priority);
+      deleteListener(button, parentCard, cardDiv, cardArr, i, priority.element);
     }
   };
 
@@ -94,15 +100,15 @@ const ListCardCreator = (function () {
     priority
   ) => {
     deleteButton.element.addEventListener('click', () => {
-      if (priority.element.textContent === 'Low') {
-        console.log('deleted low');
+      if (priority.textContent === 'Low') {
         FooterCreator.lowCountGetter('subtract');
-      } else if (priority.element.textContent === 'High') {
-        console.log('deleted high');
+      } else if (priority.textContent === 'High') {
         FooterCreator.highCountGetter('subtract');
       }
       parentElement.removeChild(childElement.element);
       arrayList.splice(index);
+      StorageManager.deleteStorageItem(index + 1);
+      StorageManager.countSubract();
     });
   };
 
@@ -116,24 +122,6 @@ const ListCardCreator = (function () {
     }
   };
 
-  const storagePopulation = (
-    index,
-    title,
-    description,
-    priority,
-    dueDate,
-    notes
-  ) => {
-    const indexAdd = index + 1;
-    localStorage.setItem(`title${indexAdd}`, title.element.textContent);
-    localStorage.setItem(
-      `description${indexAdd}`,
-      description.element.textContent
-    );
-    localStorage.setItem(`priority${indexAdd}`, priority.element.textContent);
-    localStorage.setItem(`dueDate${indexAdd}`, dueDate.element.textContent);
-    localStorage.setItem(`notes${indexAdd}`, notes.element.textContent);
-  };
-  return { cardRenderer };
+  return { cardRenderer, completeChecked, priorityCheck, deleteListener };
 })();
 export default ListCardCreator;

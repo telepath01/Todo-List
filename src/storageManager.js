@@ -1,86 +1,60 @@
 'use strict';
 import ElementCreator from './elementCreator';
 import PageRenderer from './pageElements';
+import ListCardCreator from './listCardCreator';
+import ModalCreator from './listModalCreator';
 import FooterCreator from './footerCreator';
 
 const StorageManager = (function () {
-  const listParant = document.querySelector('.list-container');
-  const storageArr = [];
-  let indexCounter = 0;
-
-  const storageStart = () => {
-    if (localStorage) {
-      indexCounter = Number(localStorage.getItem('indexCounter'));
-      populateStorage();
-      localStorage.clear();
-      indexCounter = 0;
-    } else {
-      setStorage();
-    }
-  };
-  const setStorage = () => {
-    console.log('setting storage');
-  };
-  const populateStorage = () => {
-    if (indexCounter === 0) {
-    } else if (indexCounter > 0) {
-      for (let i = 0; i < indexCounter; i++) {
-        createStorageCard(i + 1);
+  let cardCount = 0;
+  const storageRender = () => {
+    if (localStorage.getItem('title1')) {
+      console.log(cardCount);
+      cardCount = Number(localStorage.getItem('cardCounter'));
+      for (let i = 1; i <= cardCount; i++) {
+        populateFromStorage(i);
       }
     }
-
-    console.log('populating storage');
   };
 
-  const indexCounting = () => {
-    indexCounter += 1;
-    localStorage.setItem('indexCounter', indexCounter);
-    console.log(indexCounter);
-  };
-
-  const createStorageCard = (index) => {
-    let title = localStorage.getItem(`title${index}`);
-    let description = localStorage.getItem(`description${index}`);
-    let priority = localStorage.getItem(`priority${index}`);
-    let dueDate = localStorage.getItem(`dueDate${index}`);
-    let notes = localStorage.getItem(`notes${index}`);
-    const card = new ElementCreator(
+  const populateFromStorage = (index) => {
+    const cardContainer = new ElementCreator(
       PageRenderer.elementsArr[3].element,
       'div',
       'card'
     );
-    const cardTitle = new ElementCreator(
-      card.element,
+    const titleContainer = new ElementCreator(
+      cardContainer.element,
       'p',
       'card-title',
-      title
+      localStorage.getItem(`title${index}`)
     );
-    const cardDescription = new ElementCreator(
-      card.element,
+    const descriptionContainer = new ElementCreator(
+      cardContainer.element,
       'p',
       'card-description',
-      description
+      localStorage.getItem(`description${index}`)
     );
-    const cardDueDate = new ElementCreator(
-      card.element,
+    const dueDateContainer = new ElementCreator(
+      cardContainer.element,
       'p',
       'card-dueDate',
-      dueDate
+      localStorage.getItem(`dueDate${index}`)
     );
-    const cardPriority = new ElementCreator(
-      card.element,
+    const priorityContainer = new ElementCreator(
+      cardContainer.element,
       'p',
       'card-priority',
-      priority
+      localStorage.getItem(`priority${index}`)
     );
-    const cardNotes = new ElementCreator(
-      card.element,
+    const notesContainer = new ElementCreator(
+      cardContainer.element,
       'p',
       'card-notes',
-      notes
+      localStorage.getItem(`notes${index}`)
     );
     const completeDiv = new ElementCreator(
-      card.element,
+      cardContainer.element,
       'div',
       'complete-container'
     );
@@ -100,47 +74,77 @@ const StorageManager = (function () {
       'checkbox'
     );
     const button = new ElementCreator(
-      card.element,
+      cardContainer.element,
       'button',
       'delete-button',
       'X'
     );
-    priorityCheck(cardPriority.element);
-    completeUpdater(checkbox, card);
-    deleteListener(button, PageRenderer.elementsArr[3], card, index);
+    ListCardCreator.completeChecked(checkbox, cardContainer);
+    ListCardCreator.priorityCheck(priorityContainer);
+
+    priorityColor(priorityContainer);
   };
 
-  const priorityCheck = (priorityElement) => {
-    if (priorityElement.textContent === 'Low') {
-      priorityElement.style.color = '#FFFAF0';
-      priorityElement.style.backgroundColor = '#177245';
+  const storageSetter = (
+    index,
+    title,
+    description,
+    dueDate,
+    priority,
+    notes
+  ) => {
+    const storageTitle = localStorage.setItem(
+      `title${index}`,
+      title.element.textContent
+    );
+    const storageDescription = localStorage.setItem(
+      `description${index}`,
+      description.element.textContent
+    );
+    const storageDate = localStorage.setItem(
+      `dueDate${index}`,
+      dueDate.element.textContent
+    );
+    const storagePriority = localStorage.setItem(
+      `priority${index}`,
+      priority.element.textContent
+    );
+    const storageNotes = localStorage.setItem(
+      `notes${index}`,
+      notes.element.textContent
+    );
+  };
+  const countAdd = () => {
+    cardCount += 1;
+    localStorage.setItem('cardCounter', cardCount);
+  };
+  const countSubract = () => {
+    cardCount -= 1;
+    localStorage.setItem('cardCounter', cardCount);
+  };
+
+  const priorityColor = (priority) => {
+    if (priority.element.textContent === 'Low') {
       FooterCreator.lowCountGetter('add');
-    } else if (priorityElement.textContent === 'High') {
-      priorityElement.style.color = '#FFFAF0';
-      priorityElement.style.backgroundColor = '#B22222';
+    } else if (priority.element.textContent === 'High') {
       FooterCreator.highCountGetter('add');
     }
   };
 
-  const completeUpdater = (checkElement, cardDiv) => {
-    checkElement.element.addEventListener('change', () => {
-      if (checkElement.element.checked) {
-        cardDiv.element.style.backgroundColor = '#7CB9E8';
-      } else cardDiv.element.style.backgroundColor = '#efefef';
-    });
-  };
-
-  const deleteListener = (deleteButton, parentElement, childElement, index) => {
-    deleteButton.element.addEventListener('click', () => {
-      parentElement.element.removeChild(childElement.element);
-    });
+  const deleteStorageItem = (index) => {
     localStorage.removeItem(`title${index}`);
     localStorage.removeItem(`description${index}`);
-    localStorage.removeItem(`priority${index}`);
     localStorage.removeItem(`dueDate${index}`);
+    localStorage.removeItem(`priority${index}`);
     localStorage.removeItem(`notes${index}`);
   };
 
-  return { storageStart, populateStorage, storageArr, indexCounting };
+  return {
+    storageSetter,
+    storageRender,
+    countAdd,
+    countSubract,
+    deleteStorageItem,
+  };
 })();
 export default StorageManager;

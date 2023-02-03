@@ -261,7 +261,7 @@ const ModalCreator = (function () {
         ListCardCreator.cardRenderer();
       event.preventDefault();
       setCounterNumber(priorityInput);
-      StorageManager.indexCounting();
+      StorageManager.countAdd();
     });
   };
 

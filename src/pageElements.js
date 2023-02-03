@@ -1,5 +1,6 @@
 import ElementCreator from './elementCreator';
 import FooterCreator from './footerCreator';
+import StorageManager from './storageManager';
 
 const PageRenderer = (function () {
   const parentContainer = document.body;
@@ -8,6 +9,7 @@ const PageRenderer = (function () {
   const pageRender = () => {
     parentCreator();
     FooterCreator.footerRender(elementsArr[4].element);
+    StorageManager.storageRender();
   };
 
   const parentCreator = () => {

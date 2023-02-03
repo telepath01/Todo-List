@@ -219,3 +219,21 @@ body {
   border: none;
   border-radius: 1rem;
 }
+
+@media only screen and (min-width: 768px) {
+  .form-container {
+    width: 40%;
+  }
+  .card {
+    grid-template-columns: 85% 15%;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .form-container {
+    width: 20%;
+  }
+  .card {
+    grid-template-columns: 90% 10%;
+  }
+}
