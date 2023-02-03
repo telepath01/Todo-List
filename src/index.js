@@ -1,9 +1,16 @@
 import _ from 'lodash';
 import './style.css';
-function component() {
-  const element = document.createElement('div');
-  element.textContent = 'Hello World';
-  element.classList.add('hello');
-  return element;
-}
-document.body.appendChild(component());
+import HeadingElement from './headingElement';
+import PageRenderer from './pageElements';
+import SidebarElements from './sidebarElement';
+
+const Renderer = (function () {
+  const renderElements = () => {
+    PageRenderer.pageRender();
+    HeadingElement.headingRenderer();
+    SidebarElements.sidbarRenderer();
+  };
+
+  return { renderElements };
+})();
+Renderer.renderElements();

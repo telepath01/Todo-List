@@ -5,6 +5,14 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.js',
+    elementCreator: './src/elementCreator.js',
+    pageElements: './src/pageElements.js',
+    headingElement: './src/headingElement.js',
+    sidebarElement: './src/sidebarElement.js',
+    modalCreator: './src/listModalCreator.js',
+    listCardCreator: './src/listCardCreator.js',
+    footerCreator: './src/footerCreator.js',
+    storageManager: './src/storageManager.js',
   },
   devtool: 'inline-source-map',
   devServer: {
